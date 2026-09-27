@@ -32,9 +32,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <form class="contact-form" name="kontakt" method="POST" data-netlify="true">
+      <form class="contact-form" name="kontakt" method="POST" action="https://formspree.io/f/mreylkaw">
         <h3>NACHRICHT SENDEN</h3>
-        <input type="hidden" name="form-name" value="kontakt" />
+        <input type="hidden" name="_subject" value="Neue Kontaktanfrage über heindl-jacobs-sailing.de" />
         <label>
           Name / Ansprechpartner *
           <input type="text" name="name" required />
