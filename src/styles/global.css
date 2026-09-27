@@ -145,11 +145,40 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; text-transform: uppercas
 .partner-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
 /* --- HEADER / NAV --- */
-.site-header { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 20px 10%; background-color: var(--bg-dark); border-bottom: 1px solid #222; }
-.site-header .logo img { height: 40px; }
+.site-header { position: relative; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 10%; background-color: var(--bg-dark); border-bottom: 1px solid #222; }
+.site-header .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.site-header .logo img { height: 44px; width: auto; }
+.site-header .logo-text { color: var(--text-white); font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.05rem; letter-spacing: 0.5px; white-space: nowrap; }
 .site-nav { display: flex; gap: 30px; }
 .site-nav a { color: var(--text-white); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.2s ease; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--neon-volt); }
+
+/* Hamburger-Button (nur auf dem Handy sichtbar) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 101;
+}
+.nav-toggle span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background-color: var(--text-white);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* --- FOOTER --- */
 .site-footer { padding: 40px 10%; text-align: center; color: var(--text-gray); font-size: 0.85rem; border-top: 1px solid #222; }
@@ -182,8 +211,29 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; text-transform: uppercas
   .intro-text h2, .section-header h2, .cta-inner h2 { font-size: 2.2rem; }
   .hero-btns { flex-direction: column; width: 100%; }
   .btn-main, .btn-outline { width: 100%; box-sizing: border-box; }
-  .site-nav { gap: 16px; flex-wrap: wrap; }
   .partner-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Header: Logo-Schrift ausblenden, Hamburger-Menü zeigen */
+  .site-header { padding: 14px 6%; }
+  .site-header .logo-text { display: none; }
+  .site-header .logo img { height: 38px; }
+  .nav-toggle { display: flex; }
+
+  .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--bg-dark);
+    border-bottom: 1px solid #222;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .site-nav.open { max-height: 300px; }
+  .site-nav a { padding: 16px 6%; border-top: 1px solid #222; }
 
   /* Grid für Handy (1 Spalte) */
   .boat-tech-grid-compact { grid-template-columns: 1fr; }
