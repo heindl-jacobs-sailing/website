@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="Partner">
@@ -89,7 +90,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
           <li>✔ Jährliches Supporter-Meet &amp; Greet</li>
           <li>✔ Social Media Shoutout (Instagram)</li>
         </ul>
-        <a href="/kontakt/" class="btn-outline">Paket anfragen</a>
+        <a href={`${base}kontakt/`} class="btn-outline">Paket anfragen</a>
       </div>
 
       <div class="tier-card">
@@ -106,7 +107,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
           <li>✔ Networking-Events</li>
           <li>✔ Freie Nutzung von Team-Bildmaterial</li>
         </ul>
-        <a href="/kontakt/" class="btn-outline">Performance Partner werden</a>
+        <a href={`${base}kontakt/`} class="btn-outline">Performance Partner werden</a>
       </div>
 
       <div class="tier-card highlight-card">
@@ -123,7 +124,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
           <li>✔ Motivations-Vorträge in Ihrer Firma</li>
           <li>✔ Erwähnung in offiziellen Pressemitteilungen</li>
         </ul>
-        <a href="/kontakt/" class="btn-main">Exklusiv anfragen</a>
+        <a href={`${base}kontakt/`} class="btn-main">Exklusiv anfragen</a>
       </div>
     </div>
 
@@ -133,7 +134,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
         Sie möchten uns privat unterstützen und kein Firmen-Paket buchen? Wir freuen uns über jeden
         "Knoten" mehr an Geschwindigkeit durch Ihre Spende!
       </p>
-      <a href="/kontakt/" class="btn-outline">Jetzt einmalig unterstützen</a>
+      <a href={`${base}kontakt/`} class="btn-outline">Jetzt einmalig unterstützen</a>
     </div>
   </section>
 
@@ -144,7 +145,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
     <div class="partner-grid">
       {sponsors.map((sponsor) => (
         <div class="partner-logo">
-          <img src={sponsor.data.logo} alt={sponsor.data.name} />
+          <img src={`${base}${sponsor.data.logo.replace(/^\//, "")}`} alt={sponsor.data.name} />
         </div>
       ))}
     </div>
