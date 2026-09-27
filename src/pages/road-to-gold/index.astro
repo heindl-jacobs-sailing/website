@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('timeline')).sort((a, b) => b.data.order - a.data.order);
+---
+
+<BaseLayout title="Road to Gold">
+  <section class="intro-section">
+    <div class="section-header center">
+      <span class="pre-title">ROAD TO GOLD</span>
+      <h2>UNSERE REISE: ZUKUNFT,<br />GEGENWART &amp; VERGANGENHEIT</h2>
+      <p>Tippe auf ein Ereignis, um die Details zu lesen.</p>
+    </div>
+
+    <div class="rtg-timeline">
+      {entries.map((entry) => (
+        <details
+          class={`rtg-entry ${entry.data.highlight ? 'highlight-card' : ''} ${entry.data.future ? 'future-card' : ''}`}
+        >
+          <summary>
+            <span class={`tl-date ${entry.data.olympic ? 'is-olympic' : ''}`}>
+              {entry.data.date}
+              {entry.data.highlight && ' · JETZT'}
+            </span>
+            <h4>{entry.data.title}</h4>
+            {entry.data.subtitle && <p class="rtg-subtitle">{entry.data.subtitle}</p>}
+          </summary>
+          <div class="rtg-body" set:html={entry.body} />
+        </details>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .rtg-timeline {
+    max-width: 800px;
+    margin: 60px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .rtg-entry {
+    background-color: var(--bg-card);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 24px 30px;
+  }
+  .rtg-entry.highlight-card { border: 2px solid var(--neon-volt); }
+  .rtg-entry.future-card { border-color: #555; opacity: 0.85; }
+  .rtg-entry summary { cursor: pointer; list-style: none; }
+  .rtg-entry summary::-webkit-details-marker { display: none; }
+  .rtg-entry summary h4 { font-size: 1.4rem; margin: 8px 0 4px; }
+  .rtg-subtitle { color: var(--text-gray); margin: 0; font-weight: 600; }
+  .rtg-body { color: var(--text-gray); margin-top: 16px; line-height: 1.7; }
+</style>

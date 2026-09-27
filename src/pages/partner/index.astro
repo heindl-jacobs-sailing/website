@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Partner">
+  <section class="intro-section">
+    <div class="section-header center">
+      <span class="pre-title">WERDEN SIE TEIL DER CREW</span>
+      <h2>INVESTIEREN SIE IN<br />OLYMPISCHE SPITZENLEISTUNG</h2>
+    </div>
+
+    <div class="budget-box">
+      <h3>DER PREIS FÜR OLYMPISCHES GOLD</h3>
+      <p>
+        Um im 49er an der Weltspitze zu segeln, bedarf es mehr als nur Talent. Es erfordert
+        kompromisslose Materialentwicklung, weltweite Logistik und exzellentes Coaching. Die Kosten
+        für eine olympische Saison belaufen sich auf ca. <strong>197.000 €</strong>.
+      </p>
+      <p>
+        Als Kaderathleten werden wir stark vom Deutschen Segler-Verband (DSV) unterstützt, der die
+        Basis-Struktur (85.000 €) deckt. Doch um den entscheidenden Technologie- und
+        Material-Vorteil zu haben, müssen wir jährlich den High-Performance-Anteil von
+        <strong>112.000 €</strong> eigenständig finanzieren.
+      </p>
+
+      <div class="budget-bar">
+        <div class="budget-bar-dsv">DSV / VERBAND (85.000 €)</div>
+        <div class="budget-bar-need">UNSER INVESTITIONSBEDARF (112.000 €)</div>
+      </div>
+
+      <details class="budget-details">
+        <summary>Details +</summary>
+        <p><strong>Gesamte Saisonkosten: 197.000 €</strong></p>
+        <h4>Aufschlüsselung Eigenanteil (112.000 €):</h4>
+        <ul>
+          <li>Neues Boot (Rumpf &amp; Fittings) — 30.000 €</li>
+          <li>Segel-Kontingent — 28.000 €</li>
+          <li>Trainerkosten (Differenz) — 20.000 €</li>
+          <li>Masten — 14.000 €</li>
+          <li>Ersatzmaterial &amp; Verschleiß — 10.000 €</li>
+          <li>Reisekosten &amp; Meldegelder — 10.000 €</li>
+        </ul>
+        <h4>Was Ihr Investment bewegt:</h4>
+        <p><strong>27.750 € — Ein neuer 49er Rumpf</strong></p>
+        <ul>
+          <li>Rumpf inkl. Wings — 23.750 €</li>
+          <li>Schwert — 1.200 €</li>
+          <li>Foil Alignment — 1.000 €</li>
+          <li>Laufendes Gut — 1.000 €</li>
+          <li>Ruder — 800 €</li>
+        </ul>
+        <p><strong>7.500 € — Kompletter Segelsatz</strong></p>
+        <ul>
+          <li>Großsegel — 3.400 €</li>
+          <li>Gennaker — 2.600 €</li>
+          <li>Fock — 1.500 €</li>
+        </ul>
+        <p><strong>7.400 € — Carbon-Mast Setup</strong></p>
+        <ul>
+          <li>Carbon-Mast — 6.400 €</li>
+          <li>Wanten — 500 €</li>
+          <li>Trapeze — 320 €</li>
+          <li>Falle — 180 €</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section class="crew-section">
+    <div class="section-header center">
+      <span class="pre-title">UNSERE PARTNER-PAKETE</span>
+      <h2>DYNAMISCHE MARKENPLATZIERUNG<br />&amp; EXKLUSIVES NETWORKING</h2>
+    </div>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <span class="pre-title">TIER 03</span>
+        <h3>SUPPORTER CREW</h3>
+        <p>
+          Perfekt für kleine Unternehmen und leidenschaftliche Förderer, die Teil unserer
+          olympischen Reise sein möchten.
+        </p>
+        <ul class="tier-list">
+          <li>✔ Logopräsenz auf unserer Website</li>
+          <li>✔ Erwähnung im Team-Newsletter</li>
+          <li>✔ Jährliches Supporter-Meet &amp; Greet</li>
+          <li>✔ Social Media Shoutout (Instagram)</li>
+        </ul>
+        <a href="/kontakt/" class="btn-outline">Paket anfragen</a>
+      </div>
+
+      <div class="tier-card">
+        <span class="pre-title">TIER 02</span>
+        <h3>PERFORMANCE PARTNER</h3>
+        <p>
+          Sichtbare Dynamik. Sichern Sie sich prominente Werbeflächen auf unserem High-Tech-Material
+          und Team-Bekleidung.
+        </p>
+        <p class="tier-includes">Alles aus Tier 03, plus:</p>
+        <ul class="tier-list">
+          <li>✔ Logo auf dem Großsegel (Mitte)</li>
+          <li>✔ Logo auf der Team-Bekleidung</li>
+          <li>✔ Networking-Events</li>
+          <li>✔ Freie Nutzung von Team-Bildmaterial</li>
+        </ul>
+        <a href="/kontakt/" class="btn-outline">Performance Partner werden</a>
+      </div>
+
+      <div class="tier-card highlight-card">
+        <span class="pre-title">TIER 01</span>
+        <h3>OLYMPIC PARTNER</h3>
+        <p>
+          Maximale Präsenz und Exklusivität. Begleiten Sie uns als Hauptsponsor auf dem Weg zu den
+          Olympischen Spielen.
+        </p>
+        <p class="tier-includes">Alles aus Tier 02, plus:</p>
+        <ul class="tier-list">
+          <li>✔ Großes Logo im Großsegel / Gennaker</li>
+          <li>✔ Exklusiver Segeltag auf dem Wasser</li>
+          <li>✔ Motivations-Vorträge in Ihrer Firma</li>
+          <li>✔ Erwähnung in offiziellen Pressemitteilungen</li>
+        </ul>
+        <a href="/kontakt/" class="btn-main">Exklusiv anfragen</a>
+      </div>
+    </div>
+
+    <div class="private-supporter">
+      <h3>PRIVATER SUPPORTER WERDEN?</h3>
+      <p>
+        Sie möchten uns privat unterstützen und kein Firmen-Paket buchen? Wir freuen uns über jeden
+        "Knoten" mehr an Geschwindigkeit durch Ihre Spende!
+      </p>
+      <a href="/kontakt/" class="btn-outline">Jetzt einmalig unterstützen</a>
+    </div>
+  </section>
+
+  <section class="partner-section">
+    <div class="section-header center">
+      <h2>Partner</h2>
+    </div>
+    <div class="partner-grid">
+      {sponsors.map((sponsor) => (
+        <div class="partner-logo">
+          <img src={sponsor.data.logo} alt={sponsor.data.name} />
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .budget-box {
+    max-width: 800px;
+    margin: 60px auto 0;
+    background-color: var(--bg-card);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 40px;
+  }
+  .budget-box h3 { font-size: 1.6rem; margin-bottom: 20px; }
+  .budget-box p { color: var(--text-gray); margin-bottom: 16px; }
+  .budget-box strong { color: var(--text-white); }
+  .budget-bar {
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 24px 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .budget-bar-dsv {
+    flex: 85;
+    background: #333;
+    color: var(--text-gray);
+    padding: 12px 10px;
+  }
+  .budget-bar-need {
+    flex: 112;
+    background: var(--neon-volt);
+    color: #121212;
+    padding: 12px 10px;
+  }
+  .budget-details summary { cursor: pointer; color: var(--neon-volt); font-weight: 700; margin-top: 10px; }
+  .budget-details h4 { font-size: 1rem; margin: 20px 0 10px; color: var(--text-white); }
+  .budget-details ul { color: var(--text-gray); padding-left: 20px; }
+  .budget-details li { margin-bottom: 6px; }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .tier-card {
+    background-color: var(--bg-dark);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  .tier-card.highlight-card { border: 2px solid var(--neon-volt); }
+  .tier-card h3 { font-size: 1.6rem; margin: 10px 0 16px; }
+  .tier-card p { color: var(--text-gray); }
+  .tier-includes { font-weight: 700; color: var(--text-white) !important; margin-top: 16px; }
+  .tier-list { list-style: none; padding: 0; margin: 16px 0 30px; color: var(--text-gray); }
+  .tier-list li { margin-bottom: 10px; }
+  .tier-card a { margin-top: auto; }
+
+  .private-supporter {
+    max-width: 700px;
+    margin: 60px auto 0;
+    text-align: center;
+  }
+  .private-supporter p { color: var(--text-gray); margin-bottom: 24px; }
+
+  @media (max-width: 1024px) {
+    .tier-grid { grid-template-columns: 1fr; }
+  }
+</style>

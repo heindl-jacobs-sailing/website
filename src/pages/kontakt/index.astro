@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Kontakt">
+  <section class="intro-section">
+    <div class="section-header center">
+      <span class="pre-title">BEREIT FÜR DEN START?</span>
+      <h2>LASS UNS GEMEINSAM<br />AUF ERFOLGSKURS GEHEN</h2>
+      <p class="quote">"Olympic Sailing is a Team Effort."</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>DIREKTER DRAHT</h3>
+        <p>
+          Egal ob Sie sich bereits für ein Partner-Paket entschieden haben, eine private Spende
+          tätigen wollen oder individuelle Wege der Zusammenarbeit suchen – wir freuen uns auf Ihre
+          Nachricht.
+        </p>
+        <div class="contact-detail">
+          <span class="pre-title">EMAIL</span>
+          <a href="mailto:heindl.jacobs.sailing@gmail.com" class="text-link">
+            heindl.jacobs.sailing@gmail.com
+          </a>
+        </div>
+        <div class="contact-detail">
+          <span class="pre-title">SOCIAL MEDIA</span>
+          <a href="https://instagram.com/heindl_jacobs_sailing" class="text-link" target="_blank" rel="noopener">
+            @heindl_jacobs_sailing
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" name="kontakt" method="POST" data-netlify="true">
+        <h3>NACHRICHT SENDEN</h3>
+        <input type="hidden" name="form-name" value="kontakt" />
+        <label>
+          Name / Ansprechpartner *
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Unternehmen (optional)
+          <input type="text" name="unternehmen" />
+        </label>
+        <label>
+          E-Mail Adresse *
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Telefonnummer
+          <input type="tel" name="telefon" />
+        </label>
+        <label>
+          Wofür interessieren Sie sich?
+          <select name="interesse">
+            <option>Allgemeine Anfrage / Kennenlernen</option>
+            <option>Tier 01: Olympic Partner (Gold)</option>
+            <option>Tier 02: Performance Partner (Silber)</option>
+            <option>Tier 03: Supporter Crew (Bronze)</option>
+            <option>Einmalige Unterstützung / Spende</option>
+          </select>
+        </label>
+        <label>
+          Ihre Nachricht
+          <textarea name="nachricht" rows="5"></textarea>
+        </label>
+        <button type="submit" class="btn-main">Jetzt Kontakt aufnehmen</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .quote { font-style: italic; color: var(--text-gray); font-size: 1.2rem; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 60px auto 0;
+    align-items: start;
+  }
+  .contact-info p { color: var(--text-gray); margin-bottom: 30px; }
+  .contact-detail { margin-bottom: 24px; }
+  .contact-detail .pre-title { margin-bottom: 6px; }
+  .contact-form {
+    background-color: var(--bg-card);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .contact-form h3 { margin-bottom: 10px; }
+  .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; color: var(--text-gray); }
+  .contact-form input, .contact-form select, .contact-form textarea {
+    background-color: var(--bg-dark);
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 12px 14px;
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+  }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--neon-volt);
+  }
+  .contact-form button { margin-top: 10px; border: none; }
+
+  @media (max-width: 1024px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

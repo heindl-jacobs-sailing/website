@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Heindl/Jacobs Sailing — Olympische 49er-Kampagne für LA 2028.' } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: '/', label: 'Startseite' },
+  { href: '/road-to-gold/', label: 'Road to Gold' },
+  { href: '/partner/', label: 'Partner' },
+  { href: '/kontakt/', label: 'Kontakt' },
+];
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} · Heindl/Jacobs Sailing</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="/">
+        <img src="/images/logo.png" alt="Heindl Jacobs Sailing Team" />
+      </a>
+      <nav class="site-nav">
+        {navItems.map((item) => (
+          <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>© Urheberrecht. Alle Rechte vorbehalten.</p>
+      <p>
+        <a href="/">heindl-jacobs-sailing.de</a> /
+        <a href="/impressum/">Impressum</a> /
+        <a href="/datenschutz/">Datenschutz</a>
+      </p>
+    </footer>
+  </body>
+</html>
