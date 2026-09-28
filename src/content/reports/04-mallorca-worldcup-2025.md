@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 5
 dateBadge: "Mär 2025"
 dateFull: "März 2025"
 title: "Mallorca Worldcup 2025"
