@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 7
 dateBadge: "Aug 2024"
 dateFull: "August 2024"
 title: "Junioren WM 2024"

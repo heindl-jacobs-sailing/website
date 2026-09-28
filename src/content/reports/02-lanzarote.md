@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 4
 dateBadge: "Jan 2026"
 dateFull: "Januar 2026"
 title: "Lanzarote International Regatta"

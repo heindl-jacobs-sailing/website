@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 3
 dateBadge: "Apr 2026"
 dateFull: "April 2026"
 title: "MSC Regatta"
