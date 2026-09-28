@@ -56,4 +56,17 @@ const reports = defineCollection({
   }),
 });
 
-export const collections = { timeline, sponsors, team, articles, reports };
+const press = defineCollection({
+  type: 'content',
+  schema: z.object({
+    order: z.number(), // 1 = neuester Artikel, aufsteigend sortiert nach Alter
+    outlet: z.string(), // Name des Mediums, z.B. "Soester Anzeiger"
+    date: z.string(), // Anzeige-Text, z.B. "26. Juli 2024"
+    headline: z.string(),
+    teaser: z.string(),
+    about: z.string(), // z.B. "Simon & Conrad" oder "Conrad Jacobs"
+    url: z.string(), // externer Link zum Original-Artikel
+  }),
+});
+
+export const collections = { timeline, sponsors, team, articles, reports, press };

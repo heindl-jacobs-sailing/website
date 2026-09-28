@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('press')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Presse" description="Presseberichte über Simon Heindl und Conrad Jacobs (Heindl/Jacobs Sailing) — gemeinsam und einzeln.">
+  <section class="press-section">
+    <div class="section-header center">
+      <span class="pre-title">IN DEN MEDIEN</span>
+      <h2>Presse</h2>
+      <p>Berichte über unseren Weg im olympischen 49er-Segeln — als Team und einzeln.</p>
+    </div>
+
+    <div class="press-grid">
+      {items.map((item) => (
+        <a class="press-card" href={item.data.url} target="_blank" rel="noopener noreferrer">
+          <div class="press-card-top">
+            <span class="press-outlet">{item.data.outlet}</span>
+            <span class="press-date">{item.data.date}</span>
+          </div>
+          <h3>{item.data.headline}</h3>
+          <p class="press-teaser">{item.data.teaser}</p>
+          <div class="press-card-bottom">
+            <span class="press-about">{item.data.about}</span>
+            <span class="press-link">Artikel lesen ➔</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .press-section { padding: 100px 10%; }
+  .press-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1400px;
+    margin: 60px auto 0;
+  }
+  .press-card {
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid #333;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-white);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .press-card:hover { transform: translateY(-5px); border-color: var(--neon-volt); }
+
+  .press-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .press-outlet {
+    background-color: var(--bg-dark);
+    border: 1px solid #333;
+    color: var(--neon-volt);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .press-date { color: var(--text-gray); font-size: 0.85rem; }
+
+  .press-card h3 { font-size: 1.3rem; font-weight: 800; margin: 0 0 12px 0; line-height: 1.3; }
+  .press-teaser { color: var(--text-gray); font-size: 1rem; line-height: 1.6; margin: 0 0 24px 0; flex: 1; }
+
+  .press-card-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #333; padding-top: 16px; }
+  .press-about { font-size: 0.85rem; color: var(--text-gray); font-weight: 600; }
+  .press-link { font-weight: 800; font-size: 0.85rem; color: var(--neon-volt); text-transform: uppercase; font-family: 'Montserrat', sans-serif; white-space: nowrap; }
+
+  @media (max-width: 1024px) {
+    .press-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
