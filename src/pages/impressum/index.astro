@@ -8,11 +8,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h2>Impressum</h2>
     </div>
     <div class="legal-text">
-      <p><em>Platzhalter — Original-Impressum-Text von der aktuellen IONOS-Seite muss hier noch übernommen werden.</em></p>
+      <h3>Angaben gemäß § 5 TMG</h3>
+      <p>
+        Heindl.Jacobs.Sailing<br />
+        Hamburger Chaussee 13<br />
+        24114 Kiel
+      </p>
+
+      <h3>Kontakt</h3>
+      <p>
+        Telefon: 01575 9636086<br />
+        E-Mail: <a href="mailto:heindl.jacobs.sailing@gmail.com">heindl.jacobs.sailing@gmail.com</a>
+      </p>
+
+      <p class="copyright">© Urheberrecht. Alle Rechte vorbehalten.</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .legal-text { max-width: 800px; margin: 40px auto 0; color: var(--text-gray); }
+  .legal-text { max-width: 800px; margin: 40px auto 0; color: var(--text-gray); line-height: 1.7; }
+  .legal-text h3 { color: var(--text-white); margin-top: 30px; margin-bottom: 10px; font-size: 1.1rem; }
+  .legal-text h3:first-child { margin-top: 0; }
+  .legal-text a { color: var(--neon-volt); }
+  .legal-text .copyright { margin-top: 40px; font-size: 0.85rem; }
 </style>
