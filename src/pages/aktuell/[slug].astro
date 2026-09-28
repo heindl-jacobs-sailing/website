@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const reports = await getCollection('reports');
+  return reports.map((report) => ({
+    params: { slug: report.data.urlSlug },
+    props: { report },
+  }));
+}
+
+const { report } = Astro.props;
+const { Content } = await render(report);
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={report.data.title} description={report.data.teaser}>
+  <section class="reader-section">
+    <a class="btn-back" href={`${base}aktuell/`}>← Zurück zur Übersicht</a>
+
+    <div class="reader-container">
+      <img src={`${base}${report.data.image.replace(/^\//, '')}`} class="reader-hero" alt={report.data.title} />
+      <div class="reader-text">
+        <span class="reader-date">{report.data.dateFull}</span>
+        <h2>{report.data.title}</h2>
+        <div class="reader-body">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .reader-section { padding: 60px 10% 100px; max-width: 900px; margin: 0 auto; }
+  .btn-back {
+    display: inline-block;
+    margin-bottom: 30px;
+    color: var(--text-white);
+    text-decoration: none;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  .btn-back:hover { color: var(--neon-volt); }
+  .reader-container {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid #333;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+  .reader-hero { width: 100%; max-height: 480px; object-fit: cover; display: block; }
+  .reader-text { padding: 50px 40px; }
+  .reader-date {
+    display: inline-block;
+    color: var(--neon-volt);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+  .reader-text h2 { font-size: 2.5rem; font-weight: 900; margin: 0 0 30px 0; line-height: 1.2; }
+  .reader-body :global(p) { font-size: 1.1rem; line-height: 1.8; color: #DDDDDD; margin-bottom: 25px; }
+  .reader-body :global(em) { color: var(--text-gray); font-style: normal; }
+
+  @media (max-width: 768px) {
+    .reader-hero { max-height: 250px; }
+    .reader-text { padding: 30px 20px; }
+    .reader-text h2 { font-size: 1.8rem; }
+  }
+</style>

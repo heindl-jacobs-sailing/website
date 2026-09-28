@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const reports = (await getCollection('reports')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Aktuell" description="Berichte von unseren Regatten — die olympische 49er-Kampagne von Heindl/Jacobs Sailing.">
+  <section class="reports-section">
+    <div class="section-header center">
+      <span class="pre-title">LOGBUCH & BERICHTE</span>
+      <h2>AKTUELL</h2>
+      <p>Updates von unserer olympischen Kampagne</p>
+    </div>
+
+    <div class="reports-grid">
+      {reports.map((report) => (
+        <a class="news-card" href={`${base}aktuell/${report.data.urlSlug}/`}>
+          <div class="news-img-wrapper">
+            <img src={`${base}${report.data.image.replace(/^\//, '')}`} alt={report.data.title} />
+          </div>
+          <div class="news-content">
+            <span class="n-date">{report.data.dateBadge}</span>
+            <h3>{report.data.title}</h3>
+            <p>{report.data.teaser}</p>
+            <span class="read-btn">Bericht lesen ➔</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .reports-section { padding: 100px 10%; }
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1400px;
+    margin: 60px auto 0;
+  }
+  .news-card {
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid #333;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-white);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .news-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-volt);
+  }
+  .news-img-wrapper { width: 100%; height: 250px; overflow: hidden; }
+  .news-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .news-card:hover .news-img-wrapper img { transform: scale(1.05); }
+  .news-content { padding: 30px; display: flex; flex-direction: column; flex: 1; }
+  .n-date { color: var(--neon-volt); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
+  .news-content h3 { font-size: 1.4rem; font-weight: 800; margin: 0 0 15px 0; line-height: 1.3; }
+  .news-content p { font-size: 1rem; color: var(--text-gray); line-height: 1.6; margin: 0 0 20px 0; flex: 1; }
+  .read-btn { font-weight: 800; font-size: 0.9rem; color: var(--neon-volt); text-transform: uppercase; font-family: 'Montserrat', sans-serif; }
+
+  @media (max-width: 1024px) {
+    .reports-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>

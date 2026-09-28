@@ -43,4 +43,17 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { timeline, sponsors, team, articles };
+const reports = defineCollection({
+  type: 'content',
+  schema: z.object({
+    order: z.number(), // 1 = neuester Bericht, aufsteigend sortiert nach Alter
+    dateBadge: z.string(), // Kurzform fürs Grid, z.B. "Apr 2026"
+    dateFull: z.string(), // Volle Form für den Artikel, z.B. "April 2026"
+    title: z.string(),
+    teaser: z.string(),
+    image: z.string(), // Pfad unter /public/images/reports/
+    urlSlug: z.string(),
+  }),
+});
+
+export const collections = { timeline, sponsors, team, articles, reports };

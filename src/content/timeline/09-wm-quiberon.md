@@ -3,7 +3,7 @@ date: "MAI 2026"
 order: 9
 title: "WM Quiberon"
 subtitle: "Turbulentes Event mit steiler Lernkurve"
-highlight: true
+highlight: false
 future: false
 olympic: false
 ---

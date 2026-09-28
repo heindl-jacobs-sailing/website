@@ -2,56 +2,213 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-const entries = (await getCollection('timeline')).sort((a, b) => b.data.order - a.data.order);
+const entries = (await getCollection('timeline')).sort((a, b) => a.data.order - b.data.order);
+
+// Index, an dem der "JETZT"-Marker eingefügt wird: direkt vor dem ersten Zukunfts-Eintrag.
+const nowMarkerIndex = entries.findIndex((entry) => entry.data.future);
 ---
 
 <BaseLayout title="Road to Gold">
-  <section class="intro-section">
-    <div class="section-header center">
-      <span class="pre-title">ROAD TO GOLD</span>
-      <h2>UNSERE REISE: ZUKUNFT,<br />GEGENWART &amp; VERGANGENHEIT</h2>
-      <p>Tippe auf ein Ereignis, um die Details zu lesen.</p>
+  <div class="timeline-section">
+    <div class="timeline-header">
+      <h2>Road to Gold</h2>
+      <p>Unsere Reise: Vergangenheit, Gegenwart &amp; Zukunft</p>
+      <p class="instruction-text">Tippe auf ein Ereignis, um die Details zu lesen.</p>
     </div>
 
-    <div class="rtg-timeline">
-      {entries.map((entry) => (
-        <details
-          class={`rtg-entry ${entry.data.highlight ? 'highlight-card' : ''} ${entry.data.future ? 'future-card' : ''}`}
-        >
-          <summary>
-            <span class={`tl-date ${entry.data.olympic ? 'is-olympic' : ''}`}>
-              {entry.data.date}
-              {entry.data.highlight && ' · JETZT'}
-            </span>
-            <h4>{entry.data.title}</h4>
-            {entry.data.subtitle && <p class="rtg-subtitle">{entry.data.subtitle}</p>}
-          </summary>
-          <div class="rtg-body" set:html={entry.body} />
-        </details>
+    <div class="timeline-container">
+      {entries.map((entry, index) => (
+        <>
+          {index === nowMarkerIndex && (
+            <div class="tl-item now-marker">
+              <div class="now-badge">JETZT</div>
+            </div>
+          )}
+          <div
+            class={`tl-item ${index % 2 === 0 ? 'left-side' : 'right-side'} ${entry.data.highlight ? 'highlight-past' : ''} ${entry.data.olympic ? 'highlight-olympics' : ''} ${!entry.data.olympic && entry.data.future && entries[index + 1]?.data.olympic ? 'highlight-future' : ''}`}
+          >
+            <div
+              class={`tl-content ${entry.data.future ? 'future-content' : ''}`}
+              data-toggle="tl-content"
+            >
+              <div class="tl-content-inner">
+                <span class={`tl-date ${entry.data.olympic ? 'is-olympic' : ''}`}>{entry.data.date}</span>
+                <h4 class={entry.data.olympic ? 'olympic-title' : ''}>{entry.data.title}</h4>
+                {entry.data.subtitle && <p class="short-desc">{entry.data.subtitle}</p>}
+                <div class="tl-details">
+                  <p>{entry.body}</p>
+                </div>
+                <div class="expand-icon">+</div>
+              </div>
+            </div>
+          </div>
+        </>
       ))}
     </div>
-  </section>
+  </div>
 </BaseLayout>
 
+<script>
+  document.querySelectorAll('[data-toggle="tl-content"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('[data-toggle="tl-content"]').forEach((other) => {
+        if (other !== el) other.classList.remove('active');
+      });
+      el.classList.toggle('active');
+    });
+  });
+</script>
+
 <style>
-  .rtg-timeline {
-    max-width: 800px;
-    margin: 60px auto 0;
+  .timeline-section {
+    padding: 60px 20px 100px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .timeline-header { text-align: center; margin-bottom: 60px; }
+  .timeline-header h2 { font-size: 2.5rem; margin: 0 0 10px 0; }
+  .timeline-header p { color: var(--neon-volt); font-weight: 500; text-transform: uppercase; margin: 0 0 10px 0; }
+  .instruction-text { color: var(--text-gray) !important; font-size: 0.85rem; font-weight: 400 !important; text-transform: none !important; }
+
+  .timeline-container {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 16px;
   }
-  .rtg-entry {
+
+  .timeline-container::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #333333;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+
+  .tl-item { position: relative; width: 100%; display: flex; margin-bottom: -10px; z-index: 1; }
+  .left-side { justify-content: flex-start; }
+  .right-side { justify-content: flex-end; }
+  .now-marker { justify-content: center; margin: 60px 0; }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: var(--bg-dark);
+    border: 3px solid var(--neon-volt);
+    border-radius: 50%;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    box-shadow: 0 0 10px rgba(204, 255, 0, 0.4);
+  }
+  .now-marker::before { display: none; }
+
+  .tl-content {
+    width: 46%;
     background-color: var(--bg-card);
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 24px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    box-sizing: border-box;
+    position: relative;
+    margin-bottom: 40px;
   }
-  .rtg-entry.highlight-card { border: 2px solid var(--neon-volt); }
-  .rtg-entry.future-card { border-color: #555; opacity: 0.85; }
-  .rtg-entry summary { cursor: pointer; list-style: none; }
-  .rtg-entry summary::-webkit-details-marker { display: none; }
-  .rtg-entry summary h4 { font-size: 1.4rem; margin: 8px 0 4px; }
-  .rtg-subtitle { color: var(--text-gray); margin: 0; font-weight: 600; }
-  .rtg-body { color: var(--text-gray); margin-top: 16px; line-height: 1.7; }
+
+  .left-side .tl-content { border-left: 4px solid var(--neon-volt); }
+  .right-side .tl-content { border-right: 4px solid var(--neon-volt); text-align: right; }
+
+  .tl-item:hover .tl-content { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(204, 255, 0, 0.1); }
+
+  .tl-content-inner { padding: 25px 35px; position: relative; }
+
+  .expand-icon { position: absolute; bottom: 15px; font-size: 1.5rem; font-weight: 700; color: #f2f4f5; transition: transform 0.3s ease; }
+  .left-side .expand-icon { right: 20px; }
+  .right-side .expand-icon { left: 20px; }
+
+  .tl-content.active { border-color: #ffffff; box-shadow: 0 5px 25px rgba(255, 255, 255, 0.15); }
+  .tl-content.active .expand-icon { transform: rotate(45deg); }
+
+  .tl-date {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--neon-volt);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .tl-date.is-olympic { background-color: var(--neon-volt); color: var(--bg-dark); padding: 3px 10px; border-radius: 4px; }
+
+  .tl-content h4 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.3rem; margin: 0 0 8px 0; color: var(--text-white); }
+  .olympic-title { font-size: 1.5rem !important; color: var(--neon-volt) !important; }
+
+  .short-desc { margin: 0; font-size: 0.95rem; line-height: 1.4; color: var(--text-gray); }
+
+  .tl-details { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease; }
+  .tl-details p { font-size: 0.95rem; color: #dddddd; margin: 0; border-top: 1px solid #444; padding-top: 15px; text-align: left; line-height: 1.6; }
+  .tl-content.active .tl-details { max-height: 600px; opacity: 1; margin-top: 20px; }
+
+  .future-content { border-color: #555 !important; opacity: 0.85; }
+  .tl-item:hover .future-content { opacity: 1; border-color: var(--neon-volt) !important; }
+
+  .highlight-past .tl-content { border: 2px solid var(--neon-volt); }
+  .highlight-olympics .tl-content { border: 2px solid var(--neon-volt); background: linear-gradient(135deg, var(--bg-card) 0%, #2a2a2a 100%); }
+  .highlight-future .tl-content { border: 2px solid var(--neon-volt) !important; }
+
+  .now-badge {
+    background-color: var(--neon-volt);
+    color: var(--bg-dark);
+    padding: 12px 35px;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px var(--neon-volt);
+    position: relative;
+    z-index: 5;
+  }
+  .now-badge::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border: 2px solid var(--neon-volt);
+    border-radius: 35px;
+    animation: pulseNow 2s infinite;
+    opacity: 0.5;
+  }
+  @keyframes pulseNow {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  @media screen and (max-width: 990px) {
+    .timeline-header h2 { font-size: 2.2rem; }
+    .timeline-container::after { left: 40px !important; margin-left: -2px !important; transform: none !important; }
+    .tl-item { margin-bottom: 20px !important; justify-content: flex-end !important; }
+    .tl-item.now-marker { justify-content: flex-start !important; padding-left: 65px !important; margin: 40px 0 !important; }
+    .tl-item::before { left: 40px !important; top: 40px !important; transform: translateX(-50%) !important; }
+    .tl-content { width: calc(100% - 80px) !important; margin-bottom: 0 !important; border-left: 4px solid var(--neon-volt) !important; border-right: none !important; text-align: left !important; }
+    .expand-icon { right: 20px !important; left: auto !important; }
+  }
+
+  @media screen and (max-width: 600px) {
+    .timeline-header h2 { font-size: 1.8rem; }
+    .timeline-container::after { left: 20px !important; }
+    .tl-item::before { left: 20px !important; top: 30px !important; }
+    .tl-content { width: calc(100% - 40px) !important; }
+    .tl-content-inner { padding: 20px 20px 30px 20px !important; }
+    .tl-item.now-marker { padding-left: 45px !important; }
+  }
 </style>

@@ -4,7 +4,7 @@ order: 10
 title: "Kieler Woche 2026"
 subtitle: "Heimspiel vor internationaler Kulisse"
 highlight: false
-future: true
+future: false
 olympic: false
 ---
 
