@@ -4,8 +4,7 @@ role: "Steuermann / Sportsoldat"
 photo: "/images/team/simon-heindl.jpg"
 order: 1
 height: "1,84 m"
-weight: "81 kg"
-sailingSince: "Seit dem 8. Lebensjahr"
+sailingSince: "Seit dem 6. Lebensjahr"
 education: "Wirtschaftspsychologie, 1. Semester"
 ---
 

@@ -4,7 +4,6 @@ role: "Vorschoter / Sportsoldat"
 photo: "/images/team/conrad-jacobs.jpg"
 order: 2
 height: "1,86 m"
-weight: "88 kg"
 sailingSince: "Seit dem 12. Lebensjahr"
 education: "BWL, 6. Semester"
 ---
