@@ -30,6 +30,10 @@ const team = defineCollection({
     role: z.string(),
     photo: z.string(),
     order: z.number().default(0),
+    height: z.string().optional(), // z.B. "1,86 m"
+    weight: z.string().optional(), // z.B. "88 kg"
+    sailingSince: z.string().optional(), // z.B. "Seit dem 12. Lebensjahr"
+    education: z.string().optional(), // z.B. "BWL, 6. Semester"
   }),
 });
 

@@ -79,17 +79,42 @@ const base = import.meta.env.BASE_URL;
     </div>
     <div class="crew-grid">
       {team.map((member) => (
-        <div class="crew-card">
+        <button
+          type="button"
+          class="crew-card"
+          data-name={member.data.name}
+          data-role={member.data.role}
+          data-photo={`${base}${member.data.photo.replace(/^\//, '')}`}
+          data-bio={member.body}
+          data-height={member.data.height}
+          data-weight={member.data.weight}
+          data-sailing={member.data.sailingSince}
+          data-education={member.data.education}
+        >
           <div class="crew-img" style={`background-image: url(${base}${member.data.photo.replace(/^\//, '')})`}></div>
           <div class="crew-info">
             <h3>{member.data.name}</h3>
             <span class="crew-role">{member.data.role}</span>
             <p set:html={member.body} />
+            <span class="crew-more">Mehr erfahren →</span>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   </section>
+
+  <div class="crew-modal-overlay" id="crew-modal-overlay">
+    <div class="crew-modal" role="dialog" aria-modal="true">
+      <button type="button" class="crew-modal-close" id="crew-modal-close" aria-label="Schließen">✕</button>
+      <div class="crew-modal-img" id="crew-modal-img"></div>
+      <div class="crew-modal-body">
+        <h3 id="crew-modal-name"></h3>
+        <span class="crew-role" id="crew-modal-role"></span>
+        <p id="crew-modal-bio"></p>
+        <div class="crew-stats" id="crew-modal-stats"></div>
+      </div>
+    </div>
+  </div>
 
   <section class="timeline-preview">
     <div class="section-header center">
@@ -159,3 +184,51 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const overlay = document.getElementById('crew-modal-overlay');
+  const closeBtn = document.getElementById('crew-modal-close');
+  const modalImg = document.getElementById('crew-modal-img');
+  const modalName = document.getElementById('crew-modal-name');
+  const modalRole = document.getElementById('crew-modal-role');
+  const modalBio = document.getElementById('crew-modal-bio');
+  const modalStats = document.getElementById('crew-modal-stats');
+
+  function statBlock(label: string, value: string | null) {
+    if (!value) return '';
+    return `<div><span class="crew-stat-label">${label}</span><span class="crew-stat-value">${value}</span></div>`;
+  }
+
+  function openModal(card: HTMLElement) {
+    const { name, role, photo, bio, height, weight, sailing, education } = card.dataset;
+    if (modalImg) modalImg.style.backgroundImage = `url(${photo})`;
+    if (modalName) modalName.textContent = name ?? '';
+    if (modalRole) modalRole.textContent = role ?? '';
+    if (modalBio) modalBio.textContent = (bio ?? '').trim();
+    if (modalStats) {
+      modalStats.innerHTML =
+        statBlock('Größe', height ?? null) +
+        statBlock('Gewicht', weight ?? null) +
+        statBlock('Segelt seit', sailing ?? null) +
+        statBlock('Ausbildung', education ?? null);
+    }
+    overlay?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLElement>('.crew-card').forEach((card) => {
+    card.addEventListener('click', () => openModal(card));
+  });
+  closeBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
