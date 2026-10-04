@@ -65,7 +65,7 @@ const base = import.meta.env.BASE_URL;
         <a href={`${base}partner/`} class="text-link">Zu den Sponsoring-Paketen →</a>
       </div>
       <a href="#boat-section" class="visual-box">
-        <img src={`${base}images/boat.jpg`} alt="Ausrüstung" />
+        <img src={`${base}images/boat.jpg`} alt="Ausrüstung" loading="lazy" />
         <div class="caption">High-Tech Ausrüstung (Details ansehen)</div>
       </a>
     </div>
@@ -119,7 +119,7 @@ const base = import.meta.env.BASE_URL;
     </div>
     <div class="boat-tech-layout">
       <div class="boat-tech-visual">
-        <img src={`${base}images/skiff.jpg`} alt="49er Skiff" />
+        <img src={`${base}images/skiff.jpg`} alt="49er Skiff" loading="lazy" />
       </div>
       <div class="boat-tech-grid-compact">
         <div class="tech-card-compact"><span class="t-num-small">1</span><span><strong>Mast:</strong> 8,50m Carbon</span></div>
@@ -153,7 +153,7 @@ const base = import.meta.env.BASE_URL;
     <div class="partner-grid">
       {sponsors.map((sponsor) => (
         <div class="partner-logo">
-          <img src={`${base}${sponsor.data.logo.replace(/^\//, '')}`} alt={sponsor.data.name} />
+          <img src={`${base}${sponsor.data.logo.replace(/^\//, '')}`} alt={sponsor.data.name} loading="lazy" />
         </div>
       ))}
     </div>

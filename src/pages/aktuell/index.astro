@@ -18,7 +18,7 @@ const reports = (await getCollection('reports')).sort((a, b) => a.data.order - b
       {reports.map((report) => (
         <a class="news-card" href={`${base}aktuell/${report.data.urlSlug}/`}>
           <div class="news-img-wrapper">
-            <img src={`${base}${report.data.image.replace(/^\//, '')}`} alt={report.data.title} />
+            <img src={`${base}${report.data.image.replace(/^\//, '')}`} alt={report.data.title} loading="lazy" />
           </div>
           <div class="news-content">
             <span class="n-date">{report.data.dateBadge}</span>

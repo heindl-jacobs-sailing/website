@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Seite nicht gefunden" description="Diese Seite existiert nicht oder wurde verschoben.">
+  <section class="error-section">
+    <span class="pre-title">FEHLER 404</span>
+    <h1>KURS VERLOREN?</h1>
+    <p>Diese Seite gibt es nicht (mehr) — vielleicht wurde der Link falsch gesetzt oder die Seite verschoben.</p>
+    <div class="error-btns">
+      <a href={base} class="btn-main">Zur Startseite</a>
+      <a href={`${base}kontakt/`} class="btn-outline">Kontakt aufnehmen</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-section {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 10%;
+  }
+  .error-section h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin: 10px 0 20px;
+  }
+  .error-section p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin: 0 0 40px;
+  }
+  .error-btns { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+
+  @media (max-width: 768px) {
+    .error-section h1 { font-size: 2.6rem; }
+    .error-btns { flex-direction: column; width: 100%; max-width: 320px; }
+  }
+</style>

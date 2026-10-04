@@ -3,6 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const items = (await getCollection('press')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL;
+
+const downloads = [
+  { file: 'logo-full.png', label: 'Team-Logo', hint: 'PNG, transparent' },
+  { file: 'team/simon-heindl.jpg', label: 'Simon Heindl', hint: 'Porträtfoto, JPG' },
+  { file: 'team/conrad-jacobs.jpg', label: 'Conrad Jacobs', hint: 'Porträtfoto, JPG' },
+  { file: 'skiff.jpg', label: 'Team-Actionfoto', hint: 'JPG, Segelaktion' },
+  { file: 'boat.jpg', label: 'Boot-Detailfoto', hint: 'JPG' },
+];
 ---
 
 <BaseLayout title="Presse" description="Presseberichte über Simon Heindl und Conrad Jacobs (Heindl/Jacobs Sailing) — gemeinsam und einzeln.">
@@ -28,6 +37,27 @@ const items = (await getCollection('press')).sort((a, b) => a.data.order - b.dat
           </div>
         </a>
       ))}
+    </div>
+
+    <div class="press-kit">
+      <div class="section-header center">
+        <span class="pre-title">FÜR REDAKTIONEN</span>
+        <h2>Download-Material</h2>
+        <p>Logo und Fotos zur freien Verwendung in redaktioneller Berichterstattung — bitte mit Bildnachweis „Heindl/Jacobs Sailing".</p>
+      </div>
+
+      <div class="press-kit-grid">
+        {downloads.map((d) => (
+          <a class="press-kit-item" href={`${base}images/${d.file}`} download>
+            <img src={`${base}images/${d.file}`} alt={d.label} loading="lazy" />
+            <div class="press-kit-info">
+              <span class="press-kit-label">{d.label}</span>
+              <span class="press-kit-hint">{d.hint}</span>
+            </div>
+            <span class="press-kit-download">⬇ Download</span>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -77,5 +107,64 @@ const items = (await getCollection('press')).sort((a, b) => a.data.order - b.dat
 
   @media (max-width: 1024px) {
     .press-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  .press-kit {
+    max-width: 1400px;
+    margin: 100px auto 0;
+    padding-top: 60px;
+    border-top: 1px solid #333;
+  }
+
+  .press-kit-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-top: 50px;
+  }
+
+  .press-kit-item {
+    background-color: var(--bg-card);
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text-white);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .press-kit-item:hover { transform: translateY(-5px); border-color: var(--neon-volt); }
+
+  .press-kit-item img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .press-kit-info {
+    padding: 14px 16px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .press-kit-label { font-weight: 700; font-size: 0.95rem; }
+  .press-kit-hint { color: var(--text-gray); font-size: 0.8rem; }
+
+  .press-kit-download {
+    margin: 10px 16px 16px;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: var(--neon-volt);
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  @media (max-width: 1024px) {
+    .press-kit-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .press-kit-grid { grid-template-columns: 1fr; }
   }
 </style>

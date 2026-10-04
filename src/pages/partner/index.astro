@@ -145,7 +145,7 @@ const base = import.meta.env.BASE_URL;
     <div class="partner-grid">
       {sponsors.map((sponsor) => (
         <div class="partner-logo">
-          <img src={`${base}${sponsor.data.logo.replace(/^\//, "")}`} alt={sponsor.data.name} />
+          <img src={`${base}${sponsor.data.logo.replace(/^\//, "")}`} alt={sponsor.data.name} loading="lazy" />
         </div>
       ))}
     </div>
